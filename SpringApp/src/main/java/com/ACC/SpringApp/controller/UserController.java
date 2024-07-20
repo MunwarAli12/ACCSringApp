@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController { //
+public class UserController { 
 
     @Autowired
     private UserService userService;
@@ -53,7 +53,12 @@ public class UserController { //
     
     @DeleteMapping("/all")
     public ResponseEntity<String> deleteAll() {
-          userService.deleteAll();
-            return ResponseEntity.ok("All users data successfully deleted");
+          boolean idd = userService.deleteAll();
+            if(idd) {
+            	return ResponseEntity.ok("Users not found ");
+            }
+            else {
+            	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("All users data successfully deleted" );
+            }
     }
 }

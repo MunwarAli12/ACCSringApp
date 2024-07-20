@@ -54,15 +54,15 @@ public class UserService {
     @Transactional
     public boolean deleteAll() {
         List<User> users = userDAO.findAll();
-        if (users.isEmpty()) {
-            throw new NotFoundException("No users found to delete");
+        if (users == null) {
+            return false;
         }
         userDAO.deleteAll(users); 
         jdbcTemplate.execute("TRUNCATE TABLE User");
         return true;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<User> findAll() {
         List<User> users = userDAO.findAll();
         if (users.isEmpty()) {
