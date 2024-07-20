@@ -50,7 +50,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id: " + id);
         }
     }
-    
+     
     @DeleteMapping("/all")
     public ResponseEntity<String> deleteAll() {
           boolean idd = userService.deleteAll();
