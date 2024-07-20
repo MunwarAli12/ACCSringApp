@@ -39,7 +39,7 @@ public class UserController {
         
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
-// 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         boolean isDeleted = userService.deleteUser(id);
