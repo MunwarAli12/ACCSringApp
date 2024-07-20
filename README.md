@@ -1,8 +1,13 @@
 # Spring Boot User Management API
 
-## Overview
-
 This project is a Spring Boot application designed to manage user information through a REST API. The application provides endpoints to perform CRUD operations on user data, including creating, reading, updating, and deleting user records. It features exception handling and data validation to ensure robustness and reliability.
+
+## Problem Statement
+
+The project addresses the need for a user management system where users can be created, retrieved, updated, and deleted. The system must:
+- Ensure that no more than a specified limit of users share the same email address.
+- Provide meaningful error responses when users are not found or when other exceptions occur.
+- Implement CRUD operations efficiently and provide an intuitive API for client applications.
 
 ## Project Structure
 
@@ -72,6 +77,21 @@ This project is a Spring Boot application designed to manage user information th
 3. **DAO to Repository**: The `UserDAOImpl` uses `UserRepository` to execute database queries.
 4. **Exception Handling**: Any exceptions are caught by `CustomExceptionHandler` to provide appropriate HTTP responses.
 
+
+## Workflow
+
+1. **Initialize Project**: Set up the Spring Boot application and configure the database connection.
+2. **Define Model**: Create the `User` entity class with validation annotations.
+3. **Create Repository**: Implement `UserRepository` for database operations.
+4. **Implement DAO**: Develop `UserDAO` and its implementation `UserDAOImpl`.
+5. **Develop Service Layer**: Implement `UserService` with business logic.
+6. **Build Controller**: Create `UserController` to handle HTTP requests.
+7. **Exception Handling**: Implement custom exceptions and a global exception handler.
+8. **Testing**: Write unit tests for the service layer using JUnit and Mockito.
+9. **API Testing**: Verify API endpoints using Postman.
+
+
+
 ## URL Testing with Postman
 
 To test the API endpoints, use Postman to send HTTP requests:
@@ -93,26 +113,4 @@ To test the API endpoints, use Postman to send HTTP requests:
   - **Example Request**: `DELETE http://localhost:8080/api/users/1`
 - **DELETE `/api/users/all`**: Deletes all users.
   - **Example Request**: `DELETE http://localhost:8080/api/users/all`
-
-## Workflow
-
-1. **Initialize Project**: Set up the Spring Boot application and configure the database connection.
-2. **Define Model**: Create the `User` entity class with validation annotations.
-3. **Create Repository**: Implement `UserRepository` for database operations.
-4. **Implement DAO**: Develop `UserDAO` and its implementation `UserDAOImpl`.
-5. **Develop Service Layer**: Implement `UserService` with business logic.
-6. **Build Controller**: Create `UserController` to handle HTTP requests.
-7. **Exception Handling**: Implement custom exceptions and a global exception handler.
-8. **Testing**: Write unit tests for the service layer using JUnit and Mockito.
-9. **API Testing**: Verify API endpoints using Postman.
-
-## Problem Statement
-
-The project addresses the need for a user management system where users can be created, retrieved, updated, and deleted. The system must:
-- Ensure that no more than a specified limit of users share the same email address.
-- Provide meaningful error responses when users are not found or when other exceptions occur.
-- Implement CRUD operations efficiently and provide an intuitive API for client applications.
-
 ---
-
-Feel free to adjust any details based on your project's specifics or additional requirements.
