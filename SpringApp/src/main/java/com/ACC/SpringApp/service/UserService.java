@@ -41,7 +41,7 @@ public class UserService {
         return userDAO.save(user);
     }
 
-    @Transactional
+    @Transactional 
     public boolean deleteUser(Long id) {
         User user = userDAO.findById(id);
         if (user == null) {
