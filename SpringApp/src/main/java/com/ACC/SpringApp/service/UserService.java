@@ -56,7 +56,7 @@ public class UserService {
         List<User> users = userDAO.findAll();
         if (users == null) {
             return false;
-        }
+        } 
         userDAO.deleteAll(users); 
         jdbcTemplate.execute("TRUNCATE TABLE User");
         return true;
