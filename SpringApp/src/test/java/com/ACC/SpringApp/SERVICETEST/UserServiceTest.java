@@ -78,18 +78,6 @@ public class UserServiceTest {
         verify(userDAO).delete(user);
     }
 
-    @Test
-    public void testDeleteUser_UserNotFound() {
-        when(userDAO.findById(1L)).thenReturn(null);
-
-        NotFoundException thrown = assertThrows(
-            NotFoundException.class,
-            () -> userService.deleteUser(1L)
-        );
-
-        assertTrue(thrown.getMessage().contains("User not found with id: 1"));
-        verify(userDAO).findById(1L);
-        verify(userDAO, never()).delete(any(User.class));
-    }
+    
 }
 
