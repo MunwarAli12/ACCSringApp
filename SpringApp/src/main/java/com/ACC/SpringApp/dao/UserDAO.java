@@ -11,5 +11,7 @@ public interface UserDAO {
     List<User> findAll();
     long countEmail(String email);
    void deleteAll(List<User> users);
+   User findByUsername(String username);
   
+
 }

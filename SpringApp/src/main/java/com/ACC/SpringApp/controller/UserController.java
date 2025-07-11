@@ -1,10 +1,11 @@
 package com.ACC.SpringApp.controller;
 
-import com.ACC.SpringApp.exception.NotFoundException;
-import com.ACC.SpringApp.model.User; 
+import com.ACC.SpringApp.model.User;
 import com.ACC.SpringApp.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,50 +16,48 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController { 
+public class UserController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.findById(id));
     }
-    
+
     @GetMapping("/all")
-    public ResponseEntity<List<User>> findll() {
-        List<User> user = userService.findAll();
-        return ResponseEntity.ok(user);
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.findAll());
     }
-    
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User createdUser = userService.saveUser(user);
+    public ResponseEntity<Map<String, Object>> createUser(@Valid @RequestBody User user) {
+        User savedUser = userService.saveUser(user);
         
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", savedUser.getId());
+        response.put("username", savedUser.getUsername());
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    
+	/*
+	 * @PostMapping public ResponseEntity<User> createUser(@Valid @RequestBody User
+	 * user) { return new ResponseEntity<>(userService.saveUser(user),
+	 * HttpStatus.CREATED); }
+	 */
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        boolean isDeleted = userService.deleteUser(id);
-        if (isDeleted) {
-            return ResponseEntity.ok("User successfully deleted.");
-            
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id: " + id);
-        }
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User with ID " + id + " deleted successfully.");
     }
-     
+
     @DeleteMapping("/all")
-    public ResponseEntity<String> deleteAll() {
-          boolean idd = userService.deleteAll();
-            if(idd) {
-            	return ResponseEntity.ok("Users not found ");
-            }
-            else {
-            	return ResponseEntity.status(HttpStatus.NOT_FOUND).body("All users data successfully deleted" );
-            }
+    public ResponseEntity<String> deleteAllUsers() {
+        userService.deleteAll();
+        return ResponseEntity.ok("All users deleted and table truncated.");
     }
 }
