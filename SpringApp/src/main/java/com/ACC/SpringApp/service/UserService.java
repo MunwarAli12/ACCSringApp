@@ -11,6 +11,8 @@ import com.ACC.SpringApp.dao.UserDAO;
 import com.ACC.SpringApp.exception.NotFoundException;
 import com.ACC.SpringApp.model.User;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
 @Service
@@ -21,6 +23,9 @@ public class UserService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private static final int EMAIL_LIMIT = 1;
 
@@ -50,7 +55,7 @@ public class UserService {
         String lang = user.getProgrammingLanguage().toLowerCase();
         String fw = user.getFramework().toLowerCase();
 
-        if (lang.equals("java") && !fw.equals("spring boot")) {
+        if (lang.equals("java") && !fw.equals("springboot")) {
             throw new NotFoundException("If programming language is Java, the framework must be Spring Boot.");
         }
 
@@ -77,6 +82,9 @@ public class UserService {
             throw new NotFoundException("No users to delete.");
         }
         userDAO.deleteAll(users);
+        // update logic
+        jdbcTemplate.execute("TRUNCATE TABLE User");
+        entityManager.clear(); 
     }
 
     @Transactional(readOnly = true)
